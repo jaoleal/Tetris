@@ -1,2 +1,2 @@
 make:
-	g++ main.cpp -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
+	g++ -g main.cpp -o release -lraylib -lGL -lm -lpthread -ldl -lrt -lX11

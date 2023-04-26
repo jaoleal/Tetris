@@ -5,7 +5,7 @@
 
 int main()
 {
-	Game mainGame{600,600,60,"Janela",RAYWHITE};
+	Game mainGame{600,600,60,"Tetris",DARKGRAY};
 	while(!WindowShouldClose()){
 		mainGame.Step();
 	}
