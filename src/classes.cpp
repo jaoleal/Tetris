@@ -36,12 +36,13 @@ posy(y)
 setpos(x,y);
 
 buildBody(posx + 2,posy + 2,ccountw,ccounth, 25, 25, GREEN);
-setOutline((float)posx,(float)posy,(float)ccountw,(float)ccounth, 25);
-DrawOutline(outline, 25, GREEN);
+setOutline((float)posx+90,(float)posy+90,(float)ccountw,(float)ccounth);
+DrawRectangleLinesEx(Board::outline, 5, WHITE);
+//DrawOutline(outline, 25, GREEN);
 }
 
-void Board::setOutline(float posx,float posy,float ccountw,float ccounth,float linesize){
-	Board::outline = {posx,posy,(ccountw * linesize),(ccounth*linesize)};
+void Board::setOutline(float posx,float posy,float ccountw,float ccounth){
+	outline = {2,2,2,2};
 }
 
 void Board::setpos(int x, int y){
@@ -80,7 +81,7 @@ void Board::DrawBody(){
 }
 void Board::DrawOutline(Rectangle body, float linesize, Color c)
 {
-	DrawRectangleLinesEx(body, linesize, c);
+	DrawRectangleLinesEx(body, 5, GREEN);
 
 }
 
