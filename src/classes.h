@@ -30,7 +30,7 @@ class Board{
 		void buildBody(int posx, int posy, int ccountw,int ccounth, int cw, int ch, Color c);
 		void DrawOutline(Rectangle body, float linesize, Color c);
 		void DrawBody();
-		void setOutline(float posx,float posy,float ccountw,float ccounth,float linesize) ;
+		void setOutline(float posx,float posy,float ccountw,float ccounth) ;
 
 		
 
