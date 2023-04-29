@@ -1,7 +1,20 @@
+
+/*
+* @file classes.h
+*
+* @brief classes.h holds all class declarations
+*
+*@author João Leal
+*Contact: devjoaoleal1006@gmail.com
+*
+*/
+
 #pragma once
 #include "raylib.h"
 
-
+/*
+*Game class definition
+*/
 class Game{
 private:
 	void gfx();
@@ -19,12 +32,16 @@ public:
 	void Step();
 };
 
+/*
+*Board and Cell clas definition
+*/
 class Board{	
 	private:
 		const static int ccountw = 10, ccounth =20;
 		int posx, posy;
-		Rectangle outline;
+
 	public:
+		Rectangle outline = {10,10,10,10};
 		void setpos(int x, int y);
 		Board(int x, int y);
 		void buildBody(int posx, int posy, int ccountw,int ccounth, int cw, int ch, Color c);
