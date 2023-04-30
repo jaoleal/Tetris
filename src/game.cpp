@@ -54,6 +54,7 @@ void Game::Step(){
 *gfx function to all the draw only funtions
 */
 void Game::gfx(){
+	mainBoard.outline.DrawOutline(10); 
 	mainBoard.DrawBody();
 }
 /*

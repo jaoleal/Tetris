@@ -18,16 +18,11 @@ posx(x),
 posy(y)
 {
 setpos(x,y);
-
-buildBody(posx + 2,posy + 2,ccountw,ccounth, 25, 25, GREEN);
-//setOutline((float)posx,(float)posy,(float)ccountw,(float)ccounth);
-//DrawOutline(outline, 1, GREEN);
+buildBody(posx,posy,ccountw,ccounth, 25, 25, WHITE);
+outline.setOutline(WHITE, ((ccountw+1)*25),((ccounth+1)*25));
 }
 
-//setter to the outline
-void Board::setOutline(float posx,float posy,float ccountw,float ccounth){
-	outline = {2,2,2,2};
-}
+
 
 //setter to position of the board
 void Board::setpos(int x, int y){
@@ -51,8 +46,10 @@ void Board::buildBody(
 	int counter = 0;
 	for(int i = 0; i< ccountw; i++){
 		for(int j=0; j < ccounth; j++){
-			mainBoard.cells[counter].setbody((float)posx+2+i*cw,(float)posy+2+j*ch,(float)cw-2,(float)ch-2);
-			mainBoard.cells[counter].setcolor(c);
+			mainBoard.cells[counter].setbody((float)posx+i*cw,(float)posy+j*ch,(float)cw-2,(float)ch-2);
+			if(mainBoard.cells[counter].isreal() == false){
+				mainBoard.cells[counter].setcolor(BLANK);
+			}else{mainBoard.cells[counter].setcolor(c);}
 			counter++;
 		}
 	}
@@ -66,9 +63,4 @@ void Board::DrawBody(){
 			counter++;
 		}
 	}
-}
-void Board::DrawOutline(Rectangle body, float linesize, Color c)
-{
-	DrawRectangleLinesEx(body, 5, GREEN);
-
 }

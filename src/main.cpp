@@ -14,7 +14,7 @@
 #include "game.cpp"
 #include "Boardcell.cpp"
 #include "Board.cpp"
-
+#include "BoardOutline.cpp"
 
 int main()
 {
