@@ -51,12 +51,12 @@ class Board{
 		private:
 			Rectangle body;
 			Color c;
-			int posx, posy;
+			float posx, posy;
 		public:
-		Outline(int x, int y);
+		Outline(float x, float y);
 		void setOutline(Color c,float ccountw,float ccounth);
 		void DrawOutline(float linesize);
-	}outline{posx, posy};
+	}outline{((float)(posx))-(13) ,((float)(posy))-(13) };
 		
 
 	class Cell{
@@ -69,6 +69,7 @@ class Board{
 			Cell();
 			void setbody(float x, float y, float width, float height);
 			void setcolor(Color c);
+			bool isreal();
 			Rectangle getbody();
 			Color getcolor();
 			//void drawCurrentTetromino(int x, int y);

@@ -17,6 +17,7 @@
 Board::Cell::Cell(){
 	body = {10,10,10,10};
 	color = RED;
+	cexists = false;
 }
 
 /*
@@ -44,6 +45,9 @@ Rectangle Board::Cell::getbody(){
 }
 Color Board::Cell::getcolor(){
 	return color;
+}
+bool Board::Cell::isreal(){
+	return cexists;
 }
 
 

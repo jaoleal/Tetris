@@ -54,8 +54,8 @@ void Game::Step(){
 *gfx function to all the draw only funtions
 */
 void Game::gfx(){
-	//mainBoard.DrawBody();
-	//mainBoard.outline.DrawOutline(25); 
+	mainBoard.outline.DrawOutline(10); 
+	mainBoard.DrawBody();
 }
 /*
 *lgc function to all the logic funtions, not-graphical functions 
