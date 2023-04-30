@@ -41,14 +41,22 @@ class Board{
 		int posx, posy;
 
 	public:
-		Rectangle outline = {10,10,10,10};
 		void setpos(int x, int y);
 		Board(int x, int y);
 		void buildBody(int posx, int posy, int ccountw,int ccounth, int cw, int ch, Color c);
-		void DrawOutline(Rectangle body, float linesize, Color c);
+		void DrawOutline();
 		void DrawBody();
-		void setOutline(float posx,float posy,float ccountw,float ccounth) ;
-
+	
+	class Outline{
+		private:
+			Rectangle body;
+			Color c;
+			int posx, posy;
+		public:
+		Outline(int x, int y);
+		void setOutline(Color c,float ccountw,float ccounth);
+		void DrawOutline(float linesize);
+	}outline{posx, posy};
 		
 
 	class Cell{
@@ -63,7 +71,7 @@ class Board{
 			void setcolor(Color c);
 			Rectangle getbody();
 			Color getcolor();
-			void drawCurrentTetromino(int x, int y);
+			//void drawCurrentTetromino(int x, int y);
 	}cells[ccountw*ccounth];
 
-}mainBoard{30,10};	
+}mainBoard{60,60};	
