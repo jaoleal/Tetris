@@ -37,7 +37,7 @@ void Board::Cell::setcolor(Color c){
 }
 
 void Board::Cell::setreal(int newexistence){
-	Cell::cexists = newexistence;
+	cexists = newexistence;
 }
 
 /*

@@ -67,5 +67,4 @@ void Game::lgc(){
 	if(IsKeyPressed(KEY_LEFT)){tposx =tposx-1;};
 	mainBoard.ClearBoard();
 	mainBoard.NewTetrominoe(0,tposx);
-
 }

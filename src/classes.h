@@ -83,7 +83,7 @@ class Board{
 			void setbody(float x, float y, float width, float height);
 			void setcolor(Color c);
 			int isreal();
-			void setreal(bool newexistence);
+			void setreal(int newexistence);
 			Rectangle getbody();
 			Color getcolor();
 	}cells[ccountx][ccounty];

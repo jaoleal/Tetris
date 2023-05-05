@@ -62,7 +62,7 @@ void Board::DrawBody(){
 		}
 	}
 }
-
+//function that create a new tetromino
 void Board::NewTetrominoe(int id, int px){
 	int counter = 0;
 	for(int y = 0; y<4; y++){
@@ -76,11 +76,13 @@ void Board::NewTetrominoe(int id, int px){
 		}
 	}
 }
+
+//clear the board, set all cells to blank and the delete the false cells
 void Board::ClearBoard(){
 	for(int y = 0; y < ccounty;y++){
 		for(int x = 0; x < ccountx; x++){
 			mainBoard.cells[x][y].setcolor(BLANK);
-			mainBaord.cells[x][y].setreal(1);
+			mainBoard.cells[x][y].setreal(1);
 		}
 	}
 }
