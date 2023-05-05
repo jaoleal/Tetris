@@ -45,6 +45,7 @@ Game::~Game(){
 *Step function that gets all together to run everyframe
 */
 void Game::Step(){
+		
 		BeginDrawing();
 		lgc();
 		gfx();
@@ -60,5 +61,10 @@ void Game::gfx(){
 /*
 *lgc function to all the logic funtions, not-graphical functions 
 */
+int tposx = 4;
 void Game::lgc(){
+	if(IsKeyPressed(KEY_RIGHT)){tposx =tposx+1;};
+	if(IsKeyPressed(KEY_LEFT)){tposx =tposx-1;};
+	mainBoard.ClearBoard();
+	mainBoard.NewTetrominoe(0,tposx);
 }

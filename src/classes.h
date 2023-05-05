@@ -33,19 +33,32 @@ public:
 };
 
 /*
-*Board and Cell clas definition
+*Board and Cell/outline clas definition
 */
 class Board{	
 	private:
-		const static int ccountw = 10, ccounth =20;
+		const static int ccountx = 10, ccounty =20;
 		int posx, posy;
 
-	public:
+	public:	
 		void setpos(int x, int y);
 		Board(int x, int y);
-		void buildBody(int posx, int posy, int ccountw,int ccounth, int cw, int ch, Color c);
+		void buildBody(int posx, int posy, int ccountx,int ccounty, int cw, int ch, Color c);
 		void DrawOutline();
 		void DrawBody();
+		void NewTetrominoe(int id, int x);
+		void Boardupdate();
+		void ClearBoard();
+
+	class Tetrominoes{
+	private:
+		int id[9][16];
+	public:
+		//a constructor that defines all tetrominoes id.
+		Tetrominoes();
+		int getid(int T, int n);
+
+	}Tetrominoe;
 	
 	class Outline{
 		private:
@@ -64,15 +77,15 @@ class Board{
 			Rectangle body;
 			Color color;
 			int cellposx, cellposy;
-			bool cexists;
 		public:
+			int cexists;
 			Cell();
 			void setbody(float x, float y, float width, float height);
 			void setcolor(Color c);
-			bool isreal();
+			int isreal();
+			void setreal(int newexistence);
 			Rectangle getbody();
 			Color getcolor();
-			//void drawCurrentTetromino(int x, int y);
-	}cells[ccountw*ccounth];
+	}cells[ccountx][ccounty];
 
 }mainBoard{60,60};	
