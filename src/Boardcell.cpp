@@ -15,9 +15,9 @@
 *Constructor that holds the pattern of a undefined cell
 */
 Board::Cell::Cell(){
-	body = {10,10,10,10};
-	color = RED;
-	cexists = false;
+	body = {25,25,10,10};
+	color = GREEN;
+	cexists = 0;
 }
 
 /*
@@ -36,8 +36,12 @@ void Board::Cell::setcolor(Color c){
 	color = c;
 }
 
+void Board::Cell::setreal(int newexistence){
+	Cell::cexists = newexistence;
+}
+
 /*
-*getters function that returns body and color
+*getters function that returns body, color and if the cell exists
 */
 
 Rectangle Board::Cell::getbody(){
@@ -46,15 +50,6 @@ Rectangle Board::Cell::getbody(){
 Color Board::Cell::getcolor(){
 	return color;
 }
-bool Board::Cell::isreal(){
-	return cexists;
+int Board::Cell::isreal(){
+	return Cell::cexists;
 }
-
-
-/**void Board::Cell:drawT(int x, int y )
-:
-cellposx(x),
-cellposy(y)
-{
-
-}**/

@@ -17,9 +17,10 @@ Board::Board(int x,int y)
 posx(x),
 posy(y)
 {
-setpos(x,y);
-buildBody(posx,posy,ccountw,ccounth, 25, 25, WHITE);
-outline.setOutline(WHITE, ((ccountw+1)*25),((ccounth+1)*25));
+
+	setpos(x,y);
+	buildBody(posx,posy,ccountx,ccounty, 25, 25, WHITE);
+	outline.setOutline(WHITE, ((ccountx+1)*25),((ccounty+1)*25));
 }
 
 
@@ -37,30 +38,49 @@ void Board::setpos(int x, int y){
 void Board::buildBody(
 			int posx, 
 			int posy, 
-			int ccountw,
-			int ccounth,
+			int ccountx,
+			int ccounty,
 			int cw,
 			int ch, 
 			Color c)
 {
-	int counter = 0;
-	for(int i = 0; i< ccountw; i++){
-		for(int j=0; j < ccounth; j++){
-			mainBoard.cells[counter].setbody((float)posx+i*cw,(float)posy+j*ch,(float)cw-2,(float)ch-2);
-			if(mainBoard.cells[counter].isreal() == false){
-				mainBoard.cells[counter].setcolor(BLANK);
-			}else{mainBoard.cells[counter].setcolor(c);}
-			counter++;
+	for(int y = 0; y< ccounty; y++){
+		for(int x = 0; x < ccountx; x++){
+			mainBoard.cells[x][y].setbody((float)posx+(x*cw),(float)posy+(y*ch),(float)cw-2,(float)ch-2);		
+			mainBoard.cells[x][y].setcolor(c);
 		}
 	}
 }
 //Function that draws the body 
 void Board::DrawBody(){
+	for(int y = 0; y< ccounty; y++){
+		for(int x = 0; x < ccountx; x++){
+			if(mainBoard.cells[x][y].isreal() == 1){
+				DrawRectangleRec(mainBoard.cells[x][y].getbody(),mainBoard.cells[x][y].getcolor());
+			}
+			DrawRectangleLinesEx(mainBoard.cells[x][y].getbody(),1,mainBoard.cells[x][y].getcolor());
+		}
+	}
+}
+
+void Board::NewTetrominoe(int id, int px){
 	int counter = 0;
-	for(int i = 0; i<= mainBoard.ccountw; i++){
-		for(int j=0; j <= mainBoard.ccounth; j++){
-			DrawRectangleRec(mainBoard.cells[counter].getbody(),mainBoard.cells[counter].getcolor());
+	for(int y = 0; y<4; y++){
+		for(int x = 0; x<4; x++){
+			if (mainBoard.Tetrominoe.getid(id,counter) == 1){
+				mainBoard.cells[px+x][y].setcolor(WHITE);
+				mainBoard.cells[px+x][y].setreal(1);
+
+			}
 			counter++;
+		}
+	}
+}
+void Board::ClearBoard(){
+	for(int y = 0; y < ccounty;y++){
+		for(int x = 0; x < ccountx; x++){
+			mainBoard.cells[x][y].setcolor(BLANK);
+			mainBaord.cells[x][y].setreal(1);
 		}
 	}
 }
