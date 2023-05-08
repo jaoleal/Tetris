@@ -41,7 +41,6 @@ void Board::setpos(int x, int y){
 /*
 *Function that defines all the cells
 */
-
 void Board::buildBody(
 			int posx, 
 			int posy, 
@@ -71,15 +70,35 @@ void Board::DrawBody(){
 	}
 }
 //function that create a new tetromino
-bool Board::NewTetrominoe(int id, int px, int py, bool godown){
+
+//function that controls the tetromino until it stops
+//all the controls are received via true or false
+//except y position of the tetrominoe, that is controlled
+//by the lgc function.
+int px = 4;
+int rotationid = 0;
+
+bool Board::ActualTetrominoe(int id,bool torotate, bool movexminus, bool movexplus, int py, bool godown){
 	int counter = 0;
 	bool stoped = false;
 	int boost = 0;
+	//x movimentation code check
+	if(movexminus && px>0){px--;}
+	if(movexplus && px+mainBoard.Tetrominoe.getidlenght(id+rotationid)+1<20){px++;}
+
+	//rotation control code check
+	if(torotate){
+		rotationid++;
+		if(rotationid >= 4){
+			rotationid = 0;
+		}
+	}
+
 	//calculate the shortest distance until the end of the board or until the next real cell
 	if(godown){
 		for(int y = 0; y<4; y++){
 			for(int x = 0; x<4; x++){
-				if(mainBoard.Tetrominoe.getid(id, counter) == 1){
+				if(mainBoard.Tetrominoe.getid(id + rotationid, counter) == 1){
 					for(int sdc = y + py; sdc < 20; sdc++){
 						if(mainBoard.cells[px+x][sdc+1].isreal() == 1 || sdc+1 >= 20 ){
 							if(boost > sdc-y-py|| boost == 0){
@@ -95,7 +114,7 @@ bool Board::NewTetrominoe(int id, int px, int py, bool godown){
 	}
 	for(int y = 0; y<4; y++){
 		for(int x = 0; x<4; x++){
-			if (mainBoard.Tetrominoe.getid(id,counter) == 1){
+			if (mainBoard.Tetrominoe.getid(id + rotationid,counter) == 1){
 				mainBoard.cells[px+x][py+y+boost].setreal(1);
 				if(mainBoard.cells[px+x][py+y+boost+1].isreal() == 1 || py+y+boost+1 >= 20){
 					stoped = true;
@@ -104,15 +123,19 @@ bool Board::NewTetrominoe(int id, int px, int py, bool godown){
 			counter++;
 		}
 	}
+
+
 	if(stoped){
 		StackBoard();
+		px = 4;
+		rotationid = 0; 
 		return false;
 	}
 	
 	return true;
 }
 
-//clear the board, set all cells to blank and the delete the false cells
+//clear the board, set all cells to blank and delete the false cells
 void Board::ClearBoard(){
 	for(int y = 0; y < ccounty;y++){
 		for(int x = 0; x < ccountx; x++){
@@ -136,4 +159,16 @@ void Board::StackBoard(){
 		}
 	}
 
+}
+//simple function that returns the certain tetrominoe`s id 
+int Board::GenNewTetrominoe(){
+	int n = 0;
+	int tc = 7;
+	//tc is "tetrominoes counter"
+	srand(time(0));
+
+	n = rand() %tc * 4;
+	//multiplied by four to only receives multiples of four
+
+	return n;
 }
