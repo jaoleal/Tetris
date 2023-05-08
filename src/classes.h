@@ -39,6 +39,7 @@ class Board{
 	private:
 		const static int ccountx = 10, ccounty =20;
 		int posx, posy;
+		int stacked[ccountx][ccounty];
 
 	public:	
 		void setpos(int x, int y);
@@ -46,9 +47,11 @@ class Board{
 		void buildBody(int posx, int posy, int ccountx,int ccounty, int cw, int ch, Color c);
 		void DrawOutline();
 		void DrawBody();
-		void NewTetrominoe(int id, int x);
 		void Boardupdate();
 		void ClearBoard();
+		void StackBoard();
+
+		bool NewTetrominoe(int id, int px, int py, bool godown);
 
 	class Tetrominoes{
 	private:
@@ -57,9 +60,28 @@ class Board{
 		//a constructor that defines all tetrominoes id.
 		Tetrominoes();
 		int getid(int T, int n);
+		int getidlenght(int t);
 
 	}Tetrominoe;
 	
+
+	class Cell{
+		private:
+			Rectangle body;
+			Color color, outlinecolor, *cptr;
+			int cexists, *eptr;
+		public:
+			Cell();
+			void setbody(float x, float y, float width, float height);
+			void setcolor(Color c);
+			int isreal();
+			void setreal(int newexistence);
+			Rectangle getbody();
+			Color getcolor();
+			Color getoutcolor();
+
+	}cells[ccountx][ccounty];
+
 	class Outline{
 		private:
 			Rectangle body;
@@ -69,23 +91,18 @@ class Board{
 		Outline(float x, float y);
 		void setOutline(Color c,float ccountw,float ccounth);
 		void DrawOutline(float linesize);
+		Rectangle getbody();
 	}outline{((float)(posx))-(13) ,((float)(posy))-(13) };
-		
 
-	class Cell{
+
+	class Background{
 		private:
 			Rectangle body;
 			Color color;
-			int cellposx, cellposy;
 		public:
-			int cexists;
-			Cell();
-			void setbody(float x, float y, float width, float height);
-			void setcolor(Color c);
-			int isreal();
-			void setreal(int newexistence);
-			Rectangle getbody();
-			Color getcolor();
-	}cells[ccountx][ccounty];
-
+			Background();
+			void setBackground(Rectangle newbody);
+			void DrawBackground();
+			void setColor(Color c);
+	}background;
 }mainBoard{60,60};	

@@ -15,3 +15,6 @@ void Board::Outline::setOutline(Color color,float ccountw,float ccounth){
 void Board::Outline::DrawOutline(float linesize){
 	DrawRectangleLinesEx(body, linesize,c);
 }
+Rectangle Board::Outline::getbody(){
+	return body;
+}

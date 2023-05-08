@@ -17,6 +17,7 @@
 Board::Cell::Cell(){
 	body = {25,25,10,10};
 	color = GREEN;
+	outlinecolor = GREEN;
 	cexists = 0;
 }
 
@@ -50,6 +51,9 @@ Rectangle Board::Cell::getbody(){
 Color Board::Cell::getcolor(){
 	return color;
 }
+Color Board::Cell::getoutcolor(){
+	return outlinecolor;
+}
 int Board::Cell::isreal(){
-	return Cell::cexists;
+	return cexists;
 }
