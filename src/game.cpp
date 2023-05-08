@@ -63,7 +63,9 @@ void Game::gfx(){
 *lgc function to all the logic funtions, not-graphical functions 
 */
 int tposx = 4, tposy = 0;
-bool godown = false;			
+int nextTid = mainBoard.GenNewTetrominoe();
+int ActualTid = nextTid;
+bool godown = false, movexplus = false, movexminus =  false, torotate = false;			
 float downtick = 0;
 void Game::lgc(){
 	//makes the y increase every second
@@ -72,13 +74,17 @@ void Game::lgc(){
 		downtick = 0;
 		tposy++;
 	}
-	if(IsKeyPressed(KEY_RIGHT) && tposx+mainBoard.Tetrominoe.getidlenght(0)<10){tposx =tposx+1;};
-	if(IsKeyPressed(KEY_LEFT) && tposx-1>=0){tposx =tposx-1;};
+	if(IsKeyPressed(KEY_RIGHT)||IsKeyPressed(KEY_D)){movexplus = true;}else{movexplus = false;}
+	if(IsKeyPressed(KEY_LEFT)||IsKeyPressed(KEY_A)){movexminus = true;}else{movexminus = false;}
 	if(IsKeyPressed(KEY_SPACE)){godown = true;}else{godown = false;}
+	if(IsKeyPressed(KEY_R)){torotate = true;}else{torotate = false;}
 	mainBoard.ClearBoard();
 
-	if(!(mainBoard.NewTetrominoe(0,tposx,tposy, godown))){
+
+	if(!(mainBoard.ActualTetrominoe(ActualTid,torotate, movexminus,movexplus,tposy, godown))){
+		ActualTid =  nextTid;
+		nextTid = mainBoard.GenNewTetrominoe();
+
 		tposy = 0;
-		tposx = 4;
 	}
 }

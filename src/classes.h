@@ -51,11 +51,12 @@ class Board{
 		void ClearBoard();
 		void StackBoard();
 
-		bool NewTetrominoe(int id, int px, int py, bool godown);
+		bool ActualTetrominoe(int id,bool torotate, bool movexminus, bool movexplus, int py, bool godown);
+		int GenNewTetrominoe();
 
 	class Tetrominoes{
 	private:
-		int id[9][16];
+		int id[28][16];
 	public:
 		//a constructor that defines all tetrominoes id.
 		Tetrominoes();
