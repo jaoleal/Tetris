@@ -44,3 +44,11 @@ Board::Tetrominoes::Tetrominoes(){
 int Board::Tetrominoes::getid(int T, int n){
 	return id[T][n];
 }
+int Board::Tetrominoes::getidlenght(int t){
+	switch(t){
+		case 0: 
+			return 3;
+		break;
+	}
+	return 0;
+}

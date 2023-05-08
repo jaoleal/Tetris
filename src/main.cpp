@@ -16,6 +16,7 @@
 #include "Board.cpp"
 #include "BoardOutline.cpp"
 #include "tetrominoes.cpp"
+#include "BoardBackground.cpp"
 
 int main()
 {

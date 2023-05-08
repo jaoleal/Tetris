@@ -55,16 +55,30 @@ void Game::Step(){
 *gfx function to all the draw only funtions
 */
 void Game::gfx(){
+	mainBoard.background.DrawBackground();
 	mainBoard.outline.DrawOutline(10); 
 	mainBoard.DrawBody();
 }
 /*
 *lgc function to all the logic funtions, not-graphical functions 
 */
-int tposx = 4;
+int tposx = 4, tposy = 0;
+bool godown = false;			
+float downtick = 0;
 void Game::lgc(){
-	if(IsKeyPressed(KEY_RIGHT)){tposx =tposx+1;};
-	if(IsKeyPressed(KEY_LEFT)){tposx =tposx-1;};
+	//makes the y increase every second
+	downtick += GetFrameTime();
+	if (downtick > 1){
+		downtick = 0;
+		tposy++;
+	}
+	if(IsKeyPressed(KEY_RIGHT) && tposx+mainBoard.Tetrominoe.getidlenght(0)<10){tposx =tposx+1;};
+	if(IsKeyPressed(KEY_LEFT) && tposx-1>=0){tposx =tposx-1;};
+	if(IsKeyPressed(KEY_SPACE)){godown = true;}else{godown = false;}
 	mainBoard.ClearBoard();
-	mainBoard.NewTetrominoe(0,tposx);
+
+	if(!(mainBoard.NewTetrominoe(0,tposx,tposy, godown))){
+		tposy = 0;
+		tposx = 4;
+	}
 }
