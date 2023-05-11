@@ -9,6 +9,7 @@
 */
 
 #include "classes.h"
+#include <random>
 /*
 *Board constructor that build itself
 */
@@ -75,19 +76,37 @@ void Board::DrawBody(){
 //all the controls are received via true or false
 //except y position of the tetrominoe, that is controlled
 //by the lgc function.
-int px = 4;
+int px = 4, py = 0;
 int rotationid = 0;
+float downtick = 0;
+bool cangoleft =  true, cangoright = true, cangodown = true, canrotate = true;
 
-bool Board::ActualTetrominoe(int id,bool torotate, bool movexminus, bool movexplus, int py, bool godown){
+bool Board::ActualTetrominoe(int id,bool torotate, bool movexminus, bool movexplus, bool godown){
 	int counter = 0;
 	bool stoped = false;
 	int boost = 0;
-	//x movimentation code check
-	if(movexminus && px>0){px--;}
-	if(movexplus && px+mainBoard.Tetrominoe.getidlenght(id+rotationid)+1<20){px++;}
 
+	//movimentation limiter for every second
+	downtick += GetFrameTime();
+	if (downtick > 1){
+		py++;
+	}
+	//x movimentation code check
+	if(movexminus && cangoleft){px--;}
+	if(movexplus && cangoright){px++;}
+
+	//check if the x laterals is the wall.
+	//checker right
+	if(px+(Tetrominoe.getidlenght(id+rotationid))>=10){cangoright = false;}else{cangoright = true;}
+	//check if the x laterals is the wall.
+	//checker left
+	if(px-1 < 0){cangoleft = false;}else{cangoleft =  true;}
+	//rotation checker
+	if(!CheckRotation(px, py,id, rotationid, canrotate)){
+		canrotate = false; 
+	}else{canrotate = true;}
 	//rotation control code check
-	if(torotate){
+	if(torotate&&canrotate){
 		rotationid++;
 		if(rotationid >= 4){
 			rotationid = 0;
@@ -112,23 +131,31 @@ bool Board::ActualTetrominoe(int id,bool torotate, bool movexminus, bool movexpl
 		}
 		counter = 0;
 	}
+	
 	for(int y = 0; y<4; y++){
 		for(int x = 0; x<4; x++){
 			if (mainBoard.Tetrominoe.getid(id + rotationid,counter) == 1){
+				CheckCSides(px+x,py+y, cangoright, cangoleft, cangodown);
 				mainBoard.cells[px+x][py+y+boost].setreal(1);
-				if(mainBoard.cells[px+x][py+y+boost+1].isreal() == 1 || py+y+boost+1 >= 20){
-					stoped = true;
-				}
+				if((!cangodown|| py+y+boost+1 >= 20)&& downtick >= 1)
+				{stoped = true;}else{stoped = false;}
 			}
 			counter++;
 		}
+
+	}
+	//downtick resets
+	if(downtick >= 1){
+		downtick = 0;
 	}
 
-
-	if(stoped){
+	if(stoped||godown){
+		//if stoped or godown, reset values and stack the board
 		StackBoard();
 		px = 4;
-		rotationid = 0; 
+		py = 0; 
+		rotationid = 0;
+		cangodown = true; 
 		return false;
 	}
 	
@@ -158,17 +185,63 @@ void Board::StackBoard(){
 			}
 		}
 	}
-
 }
+
+//resets StackBoard
+void Board::ResetStackBoard(){
+	for(int ny = 0; ny < ccounty; ny++){
+		for(int nx = 0; nx <ccountx; nx++){
+			mainBoard.stacked[nx][ny] = 0; 
+		}
+	}
+}
+
 //simple function that returns the certain tetrominoe`s id 
 int Board::GenNewTetrominoe(){
-	int n = 0;
+	std::random_device random;
+	std::mt19937 mt(random());
+	int rn = 0;
 	int tc = 7;
+	std::uniform_real_distribution<float> dist(0, tc);
 	//tc is "tetrominoes counter"
-	srand(time(0));
-
-	n = rand() %tc * 4;
+	rn = (int)dist(mt) * 4;
 	//multiplied by four to only receives multiples of four
 
-	return n;
+	return rn;
+}
+
+//Function that receives a cell position and check his sides, returning 
+//true if it has, false if it doesn`t, on respective checkers
+
+void Board::CheckCSides(const int x,const int y, bool& cangoright,bool& cangoleft,bool& cangodown){
+	//right checker
+	if(stacked[x+1][y] == 1){cangoright = false;}
+
+	//leftchecker
+	if(stacked[x-1][y] == 1){cangoleft = false;}
+
+	//downchecker
+	if(stacked[x][y+1] == 1){cangodown = false;}
+}
+
+//Function that check, in the actual position, if the next rotation can be done
+
+bool Board::CheckRotation(const int x, const int y, const int id,int rotationid,const bool canrotate){
+	int counter = 0;
+	//rotation control code check
+	
+	rotationid++;
+	if(rotationid >= 4){
+		rotationid = 0;
+	}
+
+	for(int i=y; i <y+4; i++){
+		for(int j=x; j<x+4;j++){
+			if(Tetrominoe.getid(id+rotationid, counter) == 1 && stacked[j][i] == 1){
+				return false;
+			}
+			counter ++;
+		}
+	}
+	return true;
 }
