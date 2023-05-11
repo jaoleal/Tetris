@@ -66,25 +66,20 @@ int tposx = 4, tposy = 0;
 int nextTid = mainBoard.GenNewTetrominoe();
 int ActualTid = nextTid;
 bool godown = false, movexplus = false, movexminus =  false, torotate = false;			
-float downtick = 0;
+
+
 void Game::lgc(){
-	//makes the y increase every second
-	downtick += GetFrameTime();
-	if (downtick > 1){
-		downtick = 0;
-		tposy++;
-	}
+
 	if(IsKeyPressed(KEY_RIGHT)||IsKeyPressed(KEY_D)){movexplus = true;}else{movexplus = false;}
 	if(IsKeyPressed(KEY_LEFT)||IsKeyPressed(KEY_A)){movexminus = true;}else{movexminus = false;}
 	if(IsKeyPressed(KEY_SPACE)){godown = true;}else{godown = false;}
 	if(IsKeyPressed(KEY_R)){torotate = true;}else{torotate = false;}
+	if(IsKeyPressed(KEY_E)){mainBoard.ResetStackBoard();}
 	mainBoard.ClearBoard();
 
 
-	if(!(mainBoard.ActualTetrominoe(ActualTid,torotate, movexminus,movexplus,tposy, godown))){
+	if(!(mainBoard.ActualTetrominoe(ActualTid,torotate, movexminus,movexplus, godown))){
 		ActualTid =  nextTid;
 		nextTid = mainBoard.GenNewTetrominoe();
-
-		tposy = 0;
 	}
 }

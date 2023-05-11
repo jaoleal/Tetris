@@ -50,8 +50,11 @@ class Board{
 		void Boardupdate();
 		void ClearBoard();
 		void StackBoard();
+		void ResetStackBoard();
+		void CheckCSides(const int x,const int y,bool& cangoright,bool& cangoleft, bool& cangodown);
+		bool CheckRotation(const int x, const int y, const int id, int rotationid,const bool canrotate);
 
-		bool ActualTetrominoe(int id,bool torotate, bool movexminus, bool movexplus, int py, bool godown);
+		bool ActualTetrominoe(int id,bool torotate, bool movexminus, bool movexplus, bool godown);
 		int GenNewTetrominoe();
 
 	class Tetrominoes{

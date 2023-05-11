@@ -266,7 +266,7 @@ Board::Tetrominoes::Tetrominoes(){
 	id[9][5] = 0;
 	id[9][6] = 0;
 	id[9][7] = 0;
-	id[9][8] = 1;
+	id[9][8] = 0;
 	id[9][9] = 0;
 	id[9][10] = 0;
 	id[9][11] = 0;
@@ -317,7 +317,7 @@ Board::Tetrominoes::Tetrominoes(){
 	id[11][5] = 0;
 	id[11][6] = 0;
 	id[11][7] = 0;
-	id[11][8] = 1;
+	id[11][8] = 0;
 	id[11][9] = 0;
 	id[11][10] = 0;
 	id[11][11] = 0;
@@ -756,20 +756,19 @@ int Board::Tetrominoes::getid(int T, int n){
 	return id[T][n];
 }
 int Board::Tetrominoes::getidlenght(int t){
-	int lenght = 0, bufferlenght = 0;
-	int counter = 0;
-	for(int y = 0; y<4;y++){
-		for(int x = 0; x<4;x++){
-			if(mainBoard.Tetrominoe.getid(t,counter) == 1){
-				bufferlenght++;
-			}
-			counter++;
-		}
-		if(lenght < bufferlenght || lenght == 0 ){
-			lenght =  bufferlenght;
-			bufferlenght = 0; 
-
-		}
+	switch(t){
+		case 0: case 2: case 6: case 16: case 18: case 20: case 22: case 25: case 27:
+			return 3;
+		break;
+		case 1: case 3: case 5: case 7: case 12: case 13: case 14: case 15: case 17 :case 19: case 21: case 23: case 24: case 26:
+			return 2;
+		break;
+		case 8: case 10:
+			return 1;
+		break;
+		case 9: case 11:
+			return 4;
+		break;
 	}
-	return lenght;
+	return 0;
 }
